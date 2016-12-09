@@ -79,37 +79,34 @@ class KeepActivitiesToggle {
     static boolean setKeepActivities(@NonNull Context context, boolean keepActivities) {
 
         try {
-                // Due to restrictions related to hidden APIs, need to emulate the line below
-                // using reflection:
-                // ActivityManagerNative.getDefault().setAlwaysFinish(mAlwaysFinish);
-                final Class   classActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
-                final Method     methodGetDefault = classActivityManagerNative.getMethod("getDefault");
-                final Method     methodSetAlwaysFinish = classActivityManagerNative.getMethod("setAlwaysFinish", new Class[] {boolean.class});
-                final Object     objectInstance = methodGetDefault.invoke(null);
-                methodSetAlwaysFinish.invoke(objectInstance, new Object[]{!keepActivities});
-
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            // https://developer.android.com/reference/android/provider/Settings.Global.html#ALWAYS_FINISH_ACTIVITIES
-            // If not 0, the activity manager will aggressively finish activities and processes as soon as they are no longer needed.
-            int value = keepActivities ? KEEP_ACTIVITIES : DONT_KEEP_ACTIVITIES;
-            Settings.Global.putInt(
-                    context.getContentResolver(), Settings.Global.ALWAYS_FINISH_ACTIVITIES, value);
+            setKeepActivitiesInActivityManager(keepActivities);
+            storeSetting(context, keepActivities);
             return true;
-        } catch (SecurityException se) {
+        } catch (SecurityException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassNotFoundException e) {
             String message = context.getString(R.string.permission_required_toast);
             Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_LONG).show();
             Log.d(TAG, message);
             return false;
         }
+    }
+
+    private static void setKeepActivitiesInActivityManager(
+            boolean keepActivities) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        // Due to restrictions related to hidden APIs, need to emulate the line below
+        // using reflection:
+        // ActivityManagerNative.getDefault().setAlwaysFinish(keepActivities);
+        final Class classActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
+        final Method methodGetDefault = classActivityManagerNative.getMethod("getDefault");
+        final Method methodSetAlwaysFinish = classActivityManagerNative.getMethod("setAlwaysFinish", new Class[]{boolean.class});
+        final Object objectInstance = methodGetDefault.invoke(null);
+        methodSetAlwaysFinish.invoke(objectInstance, new Object[]{!keepActivities});
+    }
+
+    private static void storeSetting(@NonNull Context context, boolean keepActivities) {
+        // https://developer.android.com/reference/android/provider/Settings.Global.html#ALWAYS_FINISH_ACTIVITIES
+        // If not 0, the activity manager will aggressively finish activities and processes as soon as they are no longer needed.
+        int value = keepActivities ? KEEP_ACTIVITIES : DONT_KEEP_ACTIVITIES;
+        Settings.Global.putInt(
+                context.getContentResolver(), Settings.Global.ALWAYS_FINISH_ACTIVITIES, value);
     }
 }

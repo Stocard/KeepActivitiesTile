@@ -20,9 +20,7 @@
 
     <string name="app_name">Keep Activities Quick Setting</string>
     <string name="label_toggle_animator_duration_scale">Keep Activities</string>
-    <string name="permission_required_toast">Need to grant permission. Please run:\n\n
-        adb shell pm grant de.stocard.keepactivitiestile
-        android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="permission_required_toast">Need to grant permissions. Please check README.md for information on how to do that.</string>
     <string name="keep_activities_yes">Keep activities</string>
     <string name="keep_activities_no">Don\'t keep activities</string>
 
