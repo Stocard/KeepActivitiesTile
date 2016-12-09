@@ -1,6 +1,6 @@
 # Keep Activities Quick Settings Tile
 
-A quick settings tile to quickly toggle "Don't keep activities":
+A quick settings tile to quickly toggle "Don't keep activities".
 
 1. Pressing the tile toggles "Don't keep activities" on and off.
 
@@ -19,7 +19,7 @@ Note that this app requires you to **manually grant permissions** to allow the a
 * (icons8)[https://icons8.com] for the (brain-logo)[https://icons8.com/web-app/2069/Brain]
 
 ### License
-based on prior [prior work](https://github.com/nickbutcher/AnimatorDurationTile)
+based on prior [AnimatorDurationTile](https://github.com/nickbutcher/AnimatorDurationTile)
 
 ```
 Copyright 2016 Stocard GmbH.
