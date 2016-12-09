@@ -7,8 +7,11 @@ A quick settings tile to quickly toggle "Don't keep activities".
 Note that this app requires you to **manually grant permissions** to allow the app to alter the "Dont't keep activity" setting. To do this, issue the following `adb` commands:
 
 * to allow the tile to store the setting
+
 `adb shell pm grant de.stocard.keepactivitiestile android.permission.WRITE_SECURE_SETTINGS`
+
 * to allow the tile to inform the ActivityManager of the current setting 
+
 `adb shell pm grant de.stocard.keepactivitiestile android.permission.SET_ALWAYS_FINISH`
 
 
