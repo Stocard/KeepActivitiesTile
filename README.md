@@ -17,12 +17,14 @@ Note that this app requires you to **manually grant permissions** to allow the a
 
 **[Download APK](https://github.com/stocard/KeepActivitiesTile/releases)**
 
+Quick Settings Tiles are support starting with Android 7.0.
+
 ### Kudos
 * nickbutcher for [AnimatorDurationTile](https://github.com/nickbutcher/AnimatorDurationTile)
 * (icons8)[https://icons8.com] for the (brain-logo)[https://icons8.com/web-app/2069/Brain]
 
 ### License
-based on prior [AnimatorDurationTile](https://github.com/nickbutcher/AnimatorDurationTile)
+based on [AnimatorDurationTile](https://github.com/nickbutcher/AnimatorDurationTile)
 
 ```
 Copyright 2016 Stocard GmbH.
