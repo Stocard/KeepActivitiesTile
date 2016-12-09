@@ -21,7 +21,7 @@ Quick Settings Tiles are support starting with Android 7.0.
 
 ### Kudos
 * nickbutcher for [AnimatorDurationTile](https://github.com/nickbutcher/AnimatorDurationTile)
-* (icons8)[https://icons8.com] for the (brain-logo)[https://icons8.com/web-app/2069/Brain]
+* [icons8](https://icons8.com) for the base of the [brain-logo](https://icons8.com/web-app/2069/Brain)
 
 ### License
 based on [AnimatorDurationTile](https://github.com/nickbutcher/AnimatorDurationTile)
