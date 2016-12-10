@@ -15,6 +15,20 @@ Note that this app requires you to **manually grant permissions** to allow the a
 `adb shell pm grant de.stocard.keepactivitiestile android.permission.SET_ALWAYS_FINISH`
 
 
+### Screenshots
+
+Collapsed:
+
+<img src="screenshots/quick_settings_collapsed.png" align="middle">
+
+
+Expanded: 
+
+<img src="screenshots/quick_settings_expanded.png" align="middle">
+
+
+### Download
+
 **[Download APK](https://github.com/stocard/KeepActivitiesTile/releases)**
 
 Quick Settings Tiles are support starting with Android 7.0.
