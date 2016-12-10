@@ -31,7 +31,7 @@ Expanded:
 
 **[Download APK](https://github.com/stocard/KeepActivitiesTile/releases)**
 
-Quick Settings Tiles are support starting with Android 7.0.
+Quick Settings Tiles are supported starting with Android 7.0.
 
 ### Kudos
 * nickbutcher for [AnimatorDurationTile](https://github.com/nickbutcher/AnimatorDurationTile)
