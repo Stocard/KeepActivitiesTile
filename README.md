@@ -4,7 +4,7 @@ A quick settings tile to quickly toggle "Don't keep activities".
 
 1. Pressing the tile toggles "Don't keep activities" on and off.
 
-Note that this app requires you to **manually grant permissions** to allow the app to alter the "Dont't keep activity" setting. To do this, issue the following `adb` commands:
+Note that this app requires you to **manually grant permissions** to allow the app to alter the "Don't keep activity" setting. To do this, issue the following `adb` commands:
 
 * to allow the tile to store the setting
 
