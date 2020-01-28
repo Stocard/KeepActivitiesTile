@@ -19,6 +19,7 @@ package de.stocard.keepactivitiestile;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -95,12 +96,21 @@ class KeepActivitiesToggle {
             boolean keepActivities) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         // Due to restrictions related to hidden APIs, need to emulate the line below
         // using reflection:
-        // ActivityManager.getService().setAlwaysFinish(keepActivities);
-        final Class classActivityManager = Class.forName("android.app.ActivityManager");
-        final Method methodGetService = classActivityManager.getMethod("getService");
-        final Object serviceInstance = methodGetService.invoke(null);
-        final Method methodSetAlwaysFinish = serviceInstance.getClass().getMethod("setAlwaysFinish", new Class[]{boolean.class});
-        methodSetAlwaysFinish.invoke(serviceInstance, new Object[]{!keepActivities});
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // ActivityManagerNative.getDefault().setAlwaysFinish(keepActivities);
+            final Class classActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
+            final Method methodGetDefault = classActivityManagerNative.getMethod("getDefault");
+            final Method methodSetAlwaysFinish = classActivityManagerNative.getMethod("setAlwaysFinish", new Class[]{boolean.class});
+            final Object objectInstance = methodGetDefault.invoke(null);
+            methodSetAlwaysFinish.invoke(objectInstance, new Object[]{!keepActivities});
+        } else {
+            // ActivityManager.getService().setAlwaysFinish(keepActivities);
+            final Class classActivityManager = Class.forName("android.app.ActivityManager");
+            final Method methodGetService = classActivityManager.getMethod("getService");
+            final Object serviceInstance = methodGetService.invoke(null);
+            final Method methodSetAlwaysFinish = serviceInstance.getClass().getMethod("setAlwaysFinish", new Class[]{boolean.class});
+            methodSetAlwaysFinish.invoke(serviceInstance, new Object[]{!keepActivities});
+        }
     }
 
     private static void storeSetting(@NonNull Context context, boolean keepActivities) {
