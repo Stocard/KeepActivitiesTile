@@ -20,14 +20,15 @@ package de.stocard.keepactivitiestile;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.provider.Settings;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 /**
  * A helper class for working with the system setting for "Don't keep activities".
