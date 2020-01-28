@@ -19,15 +19,17 @@ package de.stocard.keepactivitiestile;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 /**
  * A helper class for working with the system setting for "Don't keep activities".
@@ -85,7 +87,7 @@ class KeepActivitiesToggle {
         } catch (SecurityException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassNotFoundException e) {
             String message = context.getString(R.string.permission_required_toast);
             Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_LONG).show();
-            Log.d(TAG, message);
+            Log.e(TAG, message, e);
             return false;
         }
     }
@@ -94,12 +96,21 @@ class KeepActivitiesToggle {
             boolean keepActivities) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         // Due to restrictions related to hidden APIs, need to emulate the line below
         // using reflection:
-        // ActivityManagerNative.getDefault().setAlwaysFinish(keepActivities);
-        final Class classActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
-        final Method methodGetDefault = classActivityManagerNative.getMethod("getDefault");
-        final Method methodSetAlwaysFinish = classActivityManagerNative.getMethod("setAlwaysFinish", new Class[]{boolean.class});
-        final Object objectInstance = methodGetDefault.invoke(null);
-        methodSetAlwaysFinish.invoke(objectInstance, new Object[]{!keepActivities});
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // ActivityManagerNative.getDefault().setAlwaysFinish(keepActivities);
+            final Class classActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
+            final Method methodGetDefault = classActivityManagerNative.getMethod("getDefault");
+            final Method methodSetAlwaysFinish = classActivityManagerNative.getMethod("setAlwaysFinish", new Class[]{boolean.class});
+            final Object objectInstance = methodGetDefault.invoke(null);
+            methodSetAlwaysFinish.invoke(objectInstance, new Object[]{!keepActivities});
+        } else {
+            // ActivityManager.getService().setAlwaysFinish(keepActivities);
+            final Class classActivityManager = Class.forName("android.app.ActivityManager");
+            final Method methodGetService = classActivityManager.getMethod("getService");
+            final Object serviceInstance = methodGetService.invoke(null);
+            final Method methodSetAlwaysFinish = serviceInstance.getClass().getMethod("setAlwaysFinish", new Class[]{boolean.class});
+            methodSetAlwaysFinish.invoke(serviceInstance, new Object[]{!keepActivities});
+        }
     }
 
     private static void storeSetting(@NonNull Context context, boolean keepActivities) {

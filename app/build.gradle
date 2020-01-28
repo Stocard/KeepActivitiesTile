@@ -15,18 +15,14 @@
  */
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.1'
+    compileSdkVersion 29
     defaultConfig {
         applicationId 'de.stocard.keepactivitiestile'
         minSdkVersion 24
-        targetSdkVersion 25
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         archivesBaseName = "keep-activities-qs"
-        jackOptions {
-            enabled true
-        }
     }
 
     buildTypes {
@@ -41,5 +37,5 @@ android {
     }
 }
 dependencies {
-    compile 'com.android.support:support-annotations:25.0.1'
+    implementation 'androidx.annotation:annotation:1.1.0'
 }
